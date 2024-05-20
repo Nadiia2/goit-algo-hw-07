@@ -1,31 +1,24 @@
-import networkx as nx
-import matplotlib.pyplot as plt
+class TreeNode:
+    def __init__(self, key):
+        self.left = None
+        self.right = None
+        self.val = key
 
-G = nx.Graph()
+def find_maximum_value(root):
+    if root is None:
+        return None
+    
+    current_node = root
+    while current_node.right is not None:
+        current_node = current_node.right
+    
+    return current_node.val
 
+root = TreeNode(20)
+root.left = TreeNode(10)
+root.right = TreeNode(30)
+root.right.left = TreeNode(25)
+root.right.right = TreeNode(40)
 
-stations = ["Station A", "Station B", "Station C", "Station D", "Station E", "Station F"]
-G.add_nodes_from(stations)
-
-
-edges = [("Station A", "Station B"), ("Station B", "Station C"), 
-         ("Station C", "Station D"), ("Station D", "Station E"),
-         ("Station E", "Station F"), ("Station B", "Station D")]
-
-G.add_edges_from(edges)
-
-
-plt.figure(figsize=(8, 6))
-nx.draw(G, with_labels=True, node_color='lightblue', node_size=500, font_size=10, font_weight='bold', edge_color='gray')
-plt.title("City Metro Network")
-plt.show()
-
-num_nodes = G.number_of_nodes()
-num_edges = G.number_of_edges()
-degree_of_nodes = dict(G.degree())
-
-print(f"Number of stations (nodes): {num_nodes}")
-print(f"Number of connections (edges): {num_edges}")
-print("Degree of each station (node):")
-for station, degree in degree_of_nodes.items():
-    print(f"{station}: {degree}")
+max_value = find_maximum_value(root)
+print(f"The maximum value in the tree is: {max_value}")
